@@ -4,7 +4,7 @@ import { Asignatura } from './asignatura';
 export class Examen {
 
     id?: number;
-    nombre?: string;
+    nombre!: string;
     createAt?: string;
     preguntas: Pregunta[] = [];
     asignatura!: Asignatura;
