@@ -7,16 +7,19 @@ import { AppComponent } from './app.component';
 
 import { SharedModule } from './shared/shared.module';
 
-import { AlumnosComponent } from './components/alumnos/alumnos.component';
-import { CursosComponent } from './components/cursos/cursos.component';
-import { ExamenesComponent } from './components/examenes/examenes.component';
+
+import { AlumnosComponent } from './components/alumnos/list/alumnos.component';
+import { CursosComponent } from './components/cursos/list/cursos.component';
+import { ExamenesComponent } from './components/examenes/list/examenes.component';
+import { FormComponent } from './components/alumnos/form/form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AlumnosComponent,
     CursosComponent,
-    ExamenesComponent
+    ExamenesComponent,
+    FormComponent
   ],
   imports: [
     BrowserModule,
