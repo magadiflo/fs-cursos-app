@@ -4,20 +4,20 @@
         <button type="button" class="btn btn-warning" [routerLink]="['/alumnos']">Volver</button>
     </div>
     <div class="card-body">
-        <form>
+        <form [formGroup]="miFormulario" (submit)="crear()" autocomplete="off">
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="nombre">
+                <input type="text" class="form-control" id="nombre" formControlName="nombre">
             </div>
             <div class="mb-3">
                 <label for="apellido" class="form-label">Apellido</label>
-                <input type="text" class="form-control" id="apellido">
+                <input type="text" class="form-control" id="apellido" formControlName="apellido">
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email">
+                <input type="email" class="form-control" id="email" formControlName="email">
             </div>
-            <button type="submit" class="btn btn-primary">Crear</button>
+            <button type="submit" class="btn btn-primary" [disabled]="miFormulario.invalid">Crear</button>
         </form>
     </div>
 </div>
