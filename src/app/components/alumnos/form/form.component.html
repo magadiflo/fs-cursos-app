@@ -8,16 +8,19 @@
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
                 <input type="text" class="form-control" id="nombre" formControlName="nombre">
+                <div class="form-text text-danger" *ngIf="error && error.nombre">{{ error.nombre }}</div>
             </div>
             <div class="mb-3">
                 <label for="apellido" class="form-label">Apellido</label>
                 <input type="text" class="form-control" id="apellido" formControlName="apellido">
+                <div class="form-text text-danger" *ngIf="error && error.apellido">{{ error.apellido }}</div>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" formControlName="email">
+                <div class="form-text text-danger" *ngIf="error && error.email">{{ error.email }}</div>
             </div>
-            <button type="submit" class="btn btn-primary" [disabled]="miFormulario.invalid">Crear</button>
+            <button type="submit" class="btn btn-primary">Crear</button>
         </form>
     </div>
 </div>

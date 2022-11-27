@@ -12,6 +12,7 @@ import { AlumnoService } from '../../../services/alumno.service';
 export class FormComponent implements OnInit {
 
   titulo: string = 'Crear Alumno';
+  error: any;
 
   miFormulario: FormGroup = this.fb.group({
     nombre: [null, [Validators.required]],
@@ -30,10 +31,18 @@ export class FormComponent implements OnInit {
   crear(): void {
     const data = { ...this.miFormulario.value }
     this.alumnoService.crearAlumno(data)
-      .subscribe(alumno => {
-        console.log(alumno);
-        alert(`Alumno ${alumno.nombre} creado con éxito`);
-        this.router.navigate(['/alumnos']);
+      .subscribe({
+        next: alumno => {
+          console.log(alumno);
+          alert(`Alumno ${alumno.nombre} creado con éxito`);
+          this.router.navigate(['/alumnos']);
+        },
+        error: err => {
+          console.log(err);
+          if (err.status === 400) {
+            this.error = err.error;
+          }
+        }
       });
   }
 
