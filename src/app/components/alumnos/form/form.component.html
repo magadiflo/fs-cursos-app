@@ -4,23 +4,29 @@
         <button type="button" class="btn btn-warning" [routerLink]="['/alumnos']">Volver</button>
     </div>
     <div class="card-body">
-        <form [formGroup]="miFormulario" (submit)="crear()" autocomplete="off">
+        <form [formGroup]="miFormulario" autocomplete="off">
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
                 <input type="text" class="form-control" id="nombre" formControlName="nombre">
-                <div class="form-text text-danger" *ngIf="error && error.nombre">{{ error.nombre }}</div>
+                <div class="form-text text-danger" *ngIf="error?.nombre">
+                    <!-- * error && error.nombre, es equivalente ===> error?.nombre, es decir con el ?-->
+                    {{ error.nombre }}
+                </div>
             </div>
             <div class="mb-3">
                 <label for="apellido" class="form-label">Apellido</label>
                 <input type="text" class="form-control" id="apellido" formControlName="apellido">
-                <div class="form-text text-danger" *ngIf="error && error.apellido">{{ error.apellido }}</div>
+                <div class="form-text text-danger" *ngIf="error?.apellido">{{ error.apellido }}</div>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" formControlName="email">
-                <div class="form-text text-danger" *ngIf="error && error.email">{{ error.email }}</div>
+                <div class="form-text text-danger" *ngIf="error?.email">{{ error.email }}</div>
             </div>
-            <button type="submit" class="btn btn-primary">Crear</button>
+            <button type="button" *ngIf="!miFormulario.controls['id'].value" (click)="crear()"
+                class="btn btn-primary">Crear</button>
+            <button type="button" *ngIf="miFormulario.controls['id'].value" (click)="editar()"
+                class="btn btn-primary">Editar</button>
         </form>
     </div>
 </div>
