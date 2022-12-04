@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Alumno } from '../models/alumno';
+import { Pagination } from '../interfaces/pagination.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -18,12 +19,11 @@ export class AlumnoService {
     return this.http.get<Alumno[]>(this.baseEndPoint);
   }
 
-  // TODO, crear una interfaz para este any
-  listarPaginas(page: number, size: number): Observable<any> {
+  listarPaginas(page: number, size: number): Observable<Pagination> {
     const params = new HttpParams()
       .set('page', page)
       .set('size', size);
-    return this.http.get<any>(`${this.baseEndPoint}/pagina`, { params });
+    return this.http.get<Pagination>(`${this.baseEndPoint}/pagina`, { params });
   }
 
   verAlumno(id: number): Observable<Alumno> {

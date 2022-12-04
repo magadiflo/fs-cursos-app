@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 
 import Swal from 'sweetalert2';
 
@@ -23,10 +24,13 @@ export class AlumnosComponent implements OnInit {
   constructor(private alumnoService: AlumnoService) { }
 
   ngOnInit(): void {
-    this.alumnoService.listarAlumnos()
-      .subscribe(alumnos => {
-        this.alumnos = alumnos;
-      });
+    this.listarPaginados();
+  }
+
+  paginar(event: PageEvent): void {
+    this.paginaActual = event.pageIndex;
+    this.totalPorPagina = event.pageSize;
+    this.listarPaginados();
   }
 
   eliminar(alumno: Alumno): void {
@@ -42,7 +46,8 @@ export class AlumnosComponent implements OnInit {
       if (result.isConfirmed) {
         this.alumnoService.eliminarAlumno(alumno.id!)
           .subscribe(() => {
-            this.alumnos = this.alumnos.filter(a => a != alumno);
+            //this.alumnos = this.alumnos.filter(a => a != alumno);
+            this.listarPaginados();
             Swal.fire(
               'Deleted!',
               `Alumno ${alumno.nombre} eliminado con éxito`,
@@ -51,6 +56,14 @@ export class AlumnosComponent implements OnInit {
           });
       }
     });
+  }
+
+  private listarPaginados(): void {
+    this.alumnoService.listarPaginas(this.paginaActual, this.totalPorPagina)
+      .subscribe(pagination => {
+        this.alumnos = pagination.content;
+        this.totalRegistros = pagination.totalElements;
+      });
   }
 
 }
