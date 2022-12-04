@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { AlumnoService } from '../../../services/alumno.service';
 import { Alumno } from '../../../models/alumno';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-alumnos',
@@ -21,6 +22,16 @@ export class AlumnosComponent implements OnInit {
         console.log(alumnos);
         this.alumnos = alumnos;
       });
+  }
+
+  eliminar(alumno: Alumno): void {
+    if (confirm(`Seguro que desea eliminar a ${alumno.nombre}`)) {
+      this.alumnoService.eliminarAlumno(alumno.id!)
+        .subscribe(() => {
+          this.alumnos = this.alumnos.filter(a => a != alumno);
+          alert(`Alumno ${alumno.nombre} eliminado con éxito`);
+        });
+    }
   }
 
 }
