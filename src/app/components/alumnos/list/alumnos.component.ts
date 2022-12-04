@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+import Swal from 'sweetalert2';
+
 import { AlumnoService } from '../../../services/alumno.service';
 import { Alumno } from '../../../models/alumno';
-import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-alumnos',
@@ -19,19 +20,32 @@ export class AlumnosComponent implements OnInit {
   ngOnInit(): void {
     this.alumnoService.listarAlumnos()
       .subscribe(alumnos => {
-        console.log(alumnos);
         this.alumnos = alumnos;
       });
   }
 
   eliminar(alumno: Alumno): void {
-    if (confirm(`Seguro que desea eliminar a ${alumno.nombre}`)) {
-      this.alumnoService.eliminarAlumno(alumno.id!)
-        .subscribe(() => {
-          this.alumnos = this.alumnos.filter(a => a != alumno);
-          alert(`Alumno ${alumno.nombre} eliminado con éxito`);
-        });
-    }
+    Swal.fire({
+      title: `¿Seguro que desea eliminar al alumno ${alumno.nombre}?`,
+      text: "El alumno será eliminado de la BD",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.alumnoService.eliminarAlumno(alumno.id!)
+          .subscribe(() => {
+            this.alumnos = this.alumnos.filter(a => a != alumno);
+            Swal.fire(
+              'Deleted!',
+              `Alumno ${alumno.nombre} eliminado con éxito`,
+              'success'
+            );
+          });
+      }
+    });
   }
 
 }

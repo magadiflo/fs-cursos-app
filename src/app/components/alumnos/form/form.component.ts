@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
+import Swal from 'sweetalert2';
+
 import { AlumnoService } from '../../../services/alumno.service';
 
 @Component({
@@ -53,7 +55,11 @@ export class FormComponent implements OnInit {
       .subscribe({
         next: alumno => {
           console.log(alumno);
-          alert(`Alumno ${alumno.nombre} creado con éxito`);
+          Swal.fire(
+            'Nuevo registro',
+            `Alumno ${alumno.nombre} creado con éxito`,
+            'success'
+          );
           this.router.navigate(['/alumnos']);
         },
         error: err => {
@@ -71,7 +77,11 @@ export class FormComponent implements OnInit {
       .subscribe({
         next: alumno => {
           console.log(alumno);
-          alert(`Alumno ${alumno.nombre} actualizado con éxito`);
+          Swal.fire(
+            'Actualización',
+            `Alumno ${alumno.nombre} actualizado con éxito`,
+            'success'
+          );
           this.router.navigate(['/alumnos']);
         },
         error: err => {
