@@ -38,7 +38,8 @@
         </table>
 
         <mat-paginator [length]="totalRegistros" [pageSize]="totalPorPagina" [pageIndex]="paginaActual"
-            [pageSizeOptions]="pageSizeOptions" (page)="paginar($event)">
+            [pageSizeOptions]="pageSizeOptions" (page)="paginar($event)" showFirstLastButtons
+            class="d-flex justify-content-start">
         </mat-paginator>
     </div>
 </div>
