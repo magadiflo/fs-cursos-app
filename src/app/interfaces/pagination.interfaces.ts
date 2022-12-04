@@ -1,7 +1,5 @@
-import { Alumno } from '../models/alumno';
-
-export interface Pagination {
-    content:          Alumno[];
+export interface Pagination<E> {
+    content:          E[];
     pageable:         Pageable;
     last:             boolean;
     totalElements:    number;

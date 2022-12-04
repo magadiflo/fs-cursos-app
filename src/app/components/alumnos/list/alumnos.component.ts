@@ -50,7 +50,7 @@ export class AlumnosComponent implements OnInit, AfterViewInit {
       confirmButtonText: 'Sí, eliminar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.alumnoService.eliminarAlumno(alumno.id!)
+        this.alumnoService.eliminar(alumno.id!)
           .subscribe(() => {
             //this.alumnos = this.alumnos.filter(a => a != alumno);
             this.listarPaginados();

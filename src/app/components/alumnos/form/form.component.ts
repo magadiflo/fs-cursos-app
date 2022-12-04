@@ -34,7 +34,7 @@ export class FormComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params
       .pipe(
-        switchMap(param => param['id'] ? this.alumnoService.verAlumno(parseInt(param['id'])) : of(false))
+        switchMap(param => param['id'] ? this.alumnoService.ver(parseInt(param['id'])) : of(false))
       )
       .subscribe({
         next: alumno => {
@@ -51,7 +51,7 @@ export class FormComponent implements OnInit {
 
   crear(): void {
     const data = { ...this.miFormulario.value }
-    this.alumnoService.crearAlumno(data)
+    this.alumnoService.crear(data)
       .subscribe({
         next: alumno => {
           console.log(alumno);
@@ -73,7 +73,7 @@ export class FormComponent implements OnInit {
 
   editar(): void {
     const data = { ...this.miFormulario.value }
-    this.alumnoService.editarAlumno(data)
+    this.alumnoService.editar(data)
       .subscribe({
         next: alumno => {
           console.log(alumno);
