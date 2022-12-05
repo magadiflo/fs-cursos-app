@@ -23,6 +23,10 @@
                 <input type="email" class="form-control" id="email" formControlName="email">
                 <div class="form-text text-danger" *ngIf="error?.email">{{ error.email }}</div>
             </div>
+            <div class="mb-3">
+                <label for="formFile" class="form-label">Seleccionar foto</label>
+                <input type="file" (change)="seleccionarFoto($event)" id="formFile" class="form-control">
+            </div>
             <button type="button" *ngIf="!miFormulario.controls['id'].value" (click)="crear()"
                 class="btn btn-primary">Crear</button>
             <button type="button" *ngIf="miFormulario.controls['id'].value" (click)="editar()"

@@ -13,6 +13,8 @@ import { Alumno } from '../../../models/alumno';
 })
 export class FormComponent extends CommonFormComponent<Alumno, AlumnoService> implements OnInit {
 
+  private fotoSeleccionada!: File;
+
   protected override miFormulario: FormGroup = this.fb.group({
     id: [null],
     nombre: [null, [Validators.required]],
@@ -30,6 +32,11 @@ export class FormComponent extends CommonFormComponent<Alumno, AlumnoService> im
     this.nombreModel = Alumno.name;
     this.titulo = `Crear ${this.nombreModel}`;
     this.redirect = '/alumnos';
+  }
+
+  seleccionarFoto(event: Event): void {
+    this.fotoSeleccionada = (event.target as HTMLInputElement).files![0];
+    console.log(this.fotoSeleccionada);
   }
 
 }
