@@ -1,5 +1,7 @@
 import { OnInit, ViewChild, AfterViewInit, Directive } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 import Swal from 'sweetalert2';
 
@@ -62,6 +64,15 @@ export abstract class CommonListarComponent<E extends Generic, S extends CommonS
 
   private listarPaginados(): void {
     this.service.listarPaginas(this.paginaActual, this.totalPorPagina)
+      .pipe(
+        switchMap(pagination => {
+          if (!pagination.first && pagination.last && pagination.content.length === 0) {
+            this.paginaActual = 0;
+            return this.service.listarPaginas(this.paginaActual, this.totalPorPagina);
+          }
+          return of(pagination);
+        })
+      )
       .subscribe(pagination => {
         this.lista = pagination.content;
         this.totalRegistros = pagination.totalElements;
