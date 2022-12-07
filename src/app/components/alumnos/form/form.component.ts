@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
 
 import { AlumnoService } from '../../../services/alumno.service';
 import { CommonFormComponent } from '../../common-form.component';
@@ -37,6 +38,58 @@ export class FormComponent extends CommonFormComponent<Alumno, AlumnoService> im
   seleccionarFoto(event: Event): void {
     this.fotoSeleccionada = (event.target as HTMLInputElement).files![0];
     console.log(this.fotoSeleccionada);
+  }
+
+  override crear(): void {
+    if (!this.fotoSeleccionada) {
+      super.crear();
+    } else {
+      const data = { ...this.miFormulario.value }
+      this.service.crearConFoto(data, this.fotoSeleccionada)
+        .subscribe({
+          next: alumno => {
+            console.log(alumno);
+            Swal.fire(
+              'Nuevo registro',
+              `${this.nombreModel} ${alumno.nombre} creado con éxito`,
+              'success'
+            );
+            this.router.navigate([this.redirect]);
+          },
+          error: err => {
+            console.log(err);
+            if (err.status === 400) {
+              this.error = err.error;
+            }
+          }
+        });
+    }
+  }
+
+  override editar(): void {
+    if (!this.fotoSeleccionada) {
+      super.editar();
+    } else {
+      const data = { ...this.miFormulario.value }
+      this.service.editarConFoto(data, this.fotoSeleccionada)
+        .subscribe({
+          next: alumno => {
+            console.log(alumno);
+            Swal.fire(
+              'Actualización de registro',
+              `${this.nombreModel} ${alumno.nombre} actualizado con éxito`,
+              'success'
+            );
+            this.router.navigate([this.redirect]);
+          },
+          error: err => {
+            console.log(err);
+            if (err.status === 400) {
+              this.error = err.error;
+            }
+          }
+        });
+    }
   }
 
 }
