@@ -14,7 +14,7 @@ import { Alumno } from '../../../models/alumno';
 })
 export class FormComponent extends CommonFormComponent<Alumno, AlumnoService> implements OnInit {
 
-  private fotoSeleccionada!: File;
+  private fotoSeleccionada: File | null = null;
 
   protected override miFormulario: FormGroup = this.fb.group({
     id: [null],
@@ -38,6 +38,10 @@ export class FormComponent extends CommonFormComponent<Alumno, AlumnoService> im
   seleccionarFoto(event: Event): void {
     this.fotoSeleccionada = (event.target as HTMLInputElement).files![0];
     console.log(this.fotoSeleccionada);
+    if (this.fotoSeleccionada.type.indexOf('image') < 0) {
+      this.fotoSeleccionada = null;
+      Swal.fire('Error al seleccionar la foto', 'Debe seleccionar un archivo de tipo imagen', 'error');
+    }
   }
 
   override crear(): void {
