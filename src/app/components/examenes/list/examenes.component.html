@@ -1,1 +1,41 @@
-<p>examenes works!</p>
+<div class="card">
+    <div class="card-header">
+        {{ titulo }}
+    </div>
+    <div class="card-body">
+        <button type="button" class="btn btn-primary" [routerLink]="['/examenes', 'form']">Crear</button>
+        <div *ngIf="lista.length == 0" class="alert alert-info mt-3">No hay exmámenes en el sistema</div>
+        <table *ngIf="lista.length > 0" class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Creado en</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let examen of lista">
+                    <td>{{ examen.id }}</td>
+                    <td>{{ examen.nombre }}</td>
+                    <td>{{ examen.createAt | date:'dd/MM/yyyy' }}</td>
+                    <td>
+                        <button type="button" [routerLink]="['/examenes', 'form', examen.id]"
+                            class="btn btn-sm btn-warning">
+                            Editar
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" (click)="eliminar(examen)" class="btn btn-sm btn-danger">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <mat-paginator [hidden]="lista.length == 0" [length]="totalRegistros" [pageSize]="totalPorPagina"
+            [pageIndex]="paginaActual" [pageSizeOptions]="pageSizeOptions" (page)="paginar($event)" showFirstLastButtons
+            class="d-flex justify-content-start">
+        </mat-paginator>
+    </div>
+</div>

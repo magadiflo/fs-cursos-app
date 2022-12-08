@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+import { environment } from 'src/environments/environment';
 import { Examen } from '../models/examen';
 import { CommonService } from './common.service';
-import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExamenService extends CommonService<Examen> {
 
-  protected override baseEndPoint: string = 'http://localhost:8090/api/examenes';
+  protected override baseEndPoint: string = `${environment.BASE_ENDPOINT}/examenes`;
 
-  constructor(protected override http: HttpClient) {
+  constructor(http: HttpClient) {
     super(http);
   }
 
