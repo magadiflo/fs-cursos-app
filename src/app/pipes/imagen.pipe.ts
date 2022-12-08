@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 import { Alumno } from '../models/alumno';
 
@@ -8,8 +9,7 @@ import { Alumno } from '../models/alumno';
 export class ImagenPipe implements PipeTransform {
 
   transform(alumno: Alumno): string {
-    console.log('actualizando imagen...');
-    return alumno.fotoHashCode ? `http://localhost:8090/api/alumnos/uploads/img/${alumno.id}` : 'assets/img-default.png';
+    return alumno.fotoHashCode ? `${environment.BASE_ENDPOINT}/alumnos/uploads/img/${alumno.id}` : './assets/images/img-default.png';
   }
 
 }
