@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 
 import { SharedModule } from './shared/shared.module';
 
+import { ImagenPipe } from './pipes/imagen.pipe';
 
 import { AlumnosComponent } from './components/alumnos/list/alumnos.component';
 import { CursosComponent } from './components/cursos/list/cursos.component';
@@ -23,7 +24,8 @@ import { FormComponent } from './components/alumnos/form/form.component';
     AlumnosComponent,
     CursosComponent,
     ExamenesComponent,
-    FormComponent
+    FormComponent,
+    ImagenPipe
   ],
   imports: [
     BrowserModule,
