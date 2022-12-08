@@ -17,6 +17,7 @@ import { AlumnosComponent } from './components/alumnos/list/alumnos.component';
 import { CursosComponent } from './components/cursos/list/cursos.component';
 import { ExamenesComponent } from './components/examenes/list/examenes.component';
 import { FormComponent } from './components/alumnos/form/form.component';
+import { CursoFormComponent } from './components/cursos/curso-form/curso-form.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { FormComponent } from './components/alumnos/form/form.component';
     CursosComponent,
     ExamenesComponent,
     FormComponent,
-    ImagenPipe
+    ImagenPipe,
+    CursoFormComponent
   ],
   imports: [
     BrowserModule,

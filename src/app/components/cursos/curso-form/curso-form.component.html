@@ -1,0 +1,22 @@
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h3>{{ titulo }}</h3>
+        <button type="button" class="btn btn-warning" [routerLink]="['/cursos']">Volver</button>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="miFormulario" autocomplete="off">
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" formControlName="nombre">
+                <div class="form-text text-danger" *ngIf="error?.nombre">
+                    <!-- * error && error.nombre, es equivalente ===> error?.nombre, es decir con el ?-->
+                    {{ error.nombre }}
+                </div>
+            </div>
+            <button type="button" *ngIf="!miFormulario.controls['id'].value" (click)="crear()"
+                class="btn btn-primary">Crear</button>
+            <button type="button" *ngIf="miFormulario.controls['id'].value" (click)="editar()"
+                class="btn btn-primary">Editar</button>
+        </form>
+    </div>
+</div>
