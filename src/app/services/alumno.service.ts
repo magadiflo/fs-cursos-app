@@ -14,7 +14,34 @@ export class AlumnoService extends CommonService<Alumno> {
 
   protected override baseEndPoint: string = `${environment.BASE_ENDPOINT}/alumnos`;
 
-  constructor(protected override http: HttpClient) {
+  /**
+   * * Recordemos que en la clase CommonService tenemos definido
+   * * en el constructor el atributo http con su modificador del 
+   * * tipo protected, de esta manera:
+   * *      constructor(protected http: HttpClient) { }
+   * * es decir, es como si se declarara de esta manera:
+   * *    protected http: HttpClient;
+   * *    constructor(http: HttpClient) {
+   * *      this.http = http;
+   * *    }
+   * * Entonces, ya habiendo recordado lo que significa colocar el modificador
+   * * dentro del costructor podemos ver que esta clase (AlumnoService) está
+   * * heredando de CommonService, por lo tanto aquí ya no usamos el modificador
+   * * protected dentro del constructor, sino más bien solo lo definimos como un parámetro,
+   * * el cual será inyectado por Angular, y ese valor se lo pasamos con super(...)
+   * * al constructor padre (CommonService), de tal manera que cuando querramos hacer
+   * * uso del atributo http, lo podremos hacer sin ningún problema ya que dicho 
+   * * atributo está definido en la clase padre y desde esta clase lo podremos usar
+   * * sin ningún problema, referenciándolo con el this:
+   * *    this.http
+   * * Podemos ver un ejemplo en el método editarConFoto(...) y crearConFoto(...), 
+   * * internamente hacemos uso del this.http.put o this.http.post que es el atributo 
+   * * de la clase padre que la estamos reutilizando en esta clase por el principio de
+   * * herencia
+   * * 
+   * 
+   */
+  constructor(http: HttpClient) {
     super(http);
   }
 
