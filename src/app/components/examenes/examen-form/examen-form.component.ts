@@ -16,7 +16,9 @@ import { CommonFormComponent } from '../../common-form.component';
 })
 export class ExamenFormComponent extends CommonFormComponent<Examen, ExamenService> implements OnInit {
 
-  /**
+  /*** 
+   * * ************* DIFERENCIA ENTRE [value] Y [ngValue] *************
+   * * *****************************************************************
    * * En los selects del formulario, en el <option></option> utilizo el [ngValue], mientras
    * * que en el proyecto de Selects de Paises del curso de Fernando Herrera
    * * usaba [value], ¿cuál sería la diferencia?
@@ -31,6 +33,19 @@ export class ExamenFormComponent extends CommonFormComponent<Examen, ExamenServi
    * * al atributo definido en el FormGroup miFormulario: 
    * * asignaturaPadre, y también para el 
    * * asignaturaHija
+   */
+
+  /**
+   * * * ************* USO DEL [compareWith] en los selects *************
+   * * *****************************************************************
+   * * Para personalizar el algoritmo de comparación de opciones predeterminado, <select> admite 
+   * * la entrada compareWith. compareWith toma una función que tiene dos argumentos: opción1 y opción2. 
+   * * Si se proporciona compareWith, Angular selecciona la opción por el valor de retorno de la función.
+   * * 
+   * * En resumen, como en los selects estamos obteniendo el objeto completo, al entrar para poder editar
+   * * un examen, vemos que los selects no se seleccionan con el valor guardado en la BD, es decir, nos 
+   * * muestra en blanco. Para eso, es que establecemos el compareWith, para personalizar nuestra propia 
+   * * comparación ya que la comparación que hace por defecto Angular no muestra los valores recuperados.
    */
 
   asignaturasPadre: Asignatura[] = [];
@@ -60,11 +75,11 @@ export class ExamenFormComponent extends CommonFormComponent<Examen, ExamenServi
         switchMap(param => param['id'] ? this.service.ver(parseInt(param['id'])) : of(false))
       )
       .subscribe({
-        next: modelo => {
+        next: (modelo: Examen | boolean) => {
           if (modelo !== false) {
-            console.log(modelo);            
             this.miFormulario.reset(modelo);
             this.titulo = `Editar ${this.nombreModel}`;
+            this.asignaturasPadre = [(modelo as Examen).asignaturaPadre!];
           }
         },
         error: err => {
@@ -85,5 +100,8 @@ export class ExamenFormComponent extends CommonFormComponent<Examen, ExamenServi
       });
   }
 
+  compararAsignatura(a1: Asignatura, a2: Asignatura): boolean {
+    return a1 && a2 ? a1.id === a2.id : a1 === a2;
+  }
 
 }
