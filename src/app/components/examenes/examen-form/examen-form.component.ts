@@ -62,6 +62,7 @@ export class ExamenFormComponent extends CommonFormComponent<Examen, ExamenServi
       .subscribe({
         next: modelo => {
           if (modelo !== false) {
+            console.log(modelo);            
             this.miFormulario.reset(modelo);
             this.titulo = `Editar ${this.nombreModel}`;
           }
@@ -75,6 +76,12 @@ export class ExamenFormComponent extends CommonFormComponent<Examen, ExamenServi
       .subscribe(asignaturas => {
         console.log(asignaturas);
         this.asignaturasPadre = asignaturas.filter(a => !a.padre);
+      });
+
+    //* Cuando cambie la asignatura padre
+    this.miFormulario.get('asignaturaPadre')?.valueChanges
+      .subscribe((asignatura: Asignatura) => {
+        this.asignaturasHija = asignatura.hijos;
       });
   }
 

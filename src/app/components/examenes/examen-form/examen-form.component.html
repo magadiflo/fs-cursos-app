@@ -21,15 +21,21 @@
                         {{ asignatura.nombre }}
                     </option>
                 </select>
+                <div class="form-text text-danger" *ngIf="error?.asignaturaPadre">
+                    {{ error.asignaturaPadre }}
+                </div>
             </div>
             <div class="mb-3">
                 <label for="asignaturaHija">Sub Asignatura</label>
-                <select id="asignaturaHija" class="form-select">
+                <select id="asignaturaHija" formControlName="asignaturaHija" class="form-select">
                     <option disabled selected [value]="null">--Seleccionar--</option>
                     <option *ngFor="let asignatura of asignaturasHija" [ngValue]="asignatura">
                         {{ asignatura.nombre }}
                     </option>
                 </select>
+                <div class="form-text text-danger" *ngIf="error?.asignaturaHija">
+                    {{ error.asignaturaHija }}
+                </div>
             </div>
             <button type="button" *ngIf="!miFormulario.controls['id'].value" (click)="crear()"
                 class="btn btn-primary">Crear</button>
