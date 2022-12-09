@@ -39,6 +39,18 @@
                     {{ error.asignaturaHija }}
                 </div>
             </div>
+            <h2 class="border-bottom pb-2">
+                <button type="button" (click)="agregarPregunta()" class="btn btn-sm btn-success">+</button>
+                Preguntas
+            </h2>
+            <div formArrayName="preguntas">
+                <div *ngFor="let pregunta of preguntasArray.controls; let i=index">
+                    <div [formGroupName]="i">
+                        <input type="text" formControlName="texto" class="form-control" aria-label="pregunta">
+                    </div>
+                </div>
+            </div>
+
             <button type="button" *ngIf="!miFormulario.controls['id'].value" (click)="crear()"
                 class="btn btn-primary">Crear</button>
             <button type="button" *ngIf="miFormulario.controls['id'].value" (click)="editar()"

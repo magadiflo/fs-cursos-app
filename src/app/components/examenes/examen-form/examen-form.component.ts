@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
@@ -55,8 +55,13 @@ export class ExamenFormComponent extends CommonFormComponent<Examen, ExamenServi
     id: [null],
     nombre: [null, [Validators.required]],
     asignaturaPadre: [null, [Validators.required]],
-    asignaturaHija: [null,],
+    asignaturaHija: [null, [Validators.required]],
+    preguntas: this.fb.array([]),
   });
+
+  get preguntasArray(): FormArray {
+    return this.miFormulario.get('preguntas') as FormArray;
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -77,9 +82,13 @@ export class ExamenFormComponent extends CommonFormComponent<Examen, ExamenServi
       .subscribe({
         next: (modelo: Examen | boolean) => {
           if (modelo !== false) {
-            this.miFormulario.reset(modelo);
+            const examen = modelo as Examen;
+            this.miFormulario.reset(examen);
             this.titulo = `Editar ${this.nombreModel}`;
-            this.asignaturasPadre = [(modelo as Examen).asignaturaPadre!];
+            this.asignaturasPadre = [examen.asignaturaPadre!];
+            examen.preguntas.forEach(e => {
+              this.preguntasArray.push(this.crearPregunta(e.id!, e.texto));
+            });
           }
         },
         error: err => {
@@ -102,6 +111,21 @@ export class ExamenFormComponent extends CommonFormComponent<Examen, ExamenServi
 
   compararAsignatura(a1: Asignatura, a2: Asignatura): boolean {
     return a1 && a2 ? a1.id === a2.id : a1 === a2;
+  }
+
+  agregarPregunta(): void {
+    this.preguntasArray.push(this.crearPregunta());
+  }
+
+  //* Como se ve, este método devuelve un FormGroup y como este método
+  //* será usado para agregarse dentro de un FormArray, el nombre que tendrá 
+  //* este FormGroup es el índice en el FormArray, precisamente ese índice
+  //* se usará en la plantilla html: [formGroupName]="i" (i=índice)
+  private crearPregunta(id: number | null = null, texto: string | null = null): FormGroup {
+    return this.fb.group({
+      id: [id],
+      texto: [texto, [Validators.required]]
+    });
   }
 
 }
