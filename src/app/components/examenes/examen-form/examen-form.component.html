@@ -13,6 +13,24 @@
                     {{ error.nombre }}
                 </div>
             </div>
+            <div class="mb-3">
+                <label for="asignaturaPadre">Asignatura Principal</label>
+                <select id="asignaturaPadre" formControlName="asignaturaPadre" class="form-select">
+                    <option disabled selected [ngValue]="null">--Seleccionar--</option>
+                    <option *ngFor="let asignatura of asignaturasPadre" [ngValue]="asignatura">
+                        {{ asignatura.nombre }}
+                    </option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="asignaturaHija">Sub Asignatura</label>
+                <select id="asignaturaHija" class="form-select">
+                    <option disabled selected [value]="null">--Seleccionar--</option>
+                    <option *ngFor="let asignatura of asignaturasHija" [ngValue]="asignatura">
+                        {{ asignatura.nombre }}
+                    </option>
+                </select>
+            </div>
             <button type="button" *ngIf="!miFormulario.controls['id'].value" (click)="crear()"
                 class="btn btn-primary">Crear</button>
             <button type="button" *ngIf="miFormulario.controls['id'].value" (click)="editar()"

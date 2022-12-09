@@ -16,12 +16,31 @@ import { CommonFormComponent } from '../../common-form.component';
 })
 export class ExamenFormComponent extends CommonFormComponent<Examen, ExamenService> implements OnInit {
 
+  /**
+   * * En los selects del formulario, en el <option></option> utilizo el [ngValue], mientras
+   * * que en el proyecto de Selects de Paises del curso de Fernando Herrera
+   * * usaba [value], ¿cuál sería la diferencia?
+   * * 
+   * *    [value] = "..." Sólo admite un string
+   * *    [ngValue] = "..." Admite objetos o cualquier tipo, es decir, este último por ejemplo,
+   * *                      si defino [ngValue]="true", será un true y no una cadena "true" como 
+   * *                      ocurriría con el [value]
+   * *
+   * * En este formulario en particular, cuando seleccionamos una
+   * * asignatura, queremos asignar el objeto completo de Asignatura,
+   * * al atributo definido en el FormGroup miFormulario: 
+   * * asignaturaPadre, y también para el 
+   * * asignaturaHija
+   */
+
   asignaturasPadre: Asignatura[] = [];
   asignaturasHija: Asignatura[] = [];
 
   protected override miFormulario: FormGroup = this.fb.group({
     id: [null],
-    nombre: [null, [Validators.required]]
+    nombre: [null, [Validators.required]],
+    asignaturaPadre: [null, [Validators.required]],
+    asignaturaHija: [null,],
   });
 
   constructor(
