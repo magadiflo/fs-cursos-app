@@ -98,7 +98,6 @@ export class ExamenFormComponent extends CommonFormComponent<Examen, ExamenServi
 
     this.service.findAllAsignaturas()
       .subscribe(asignaturas => {
-        console.log(asignaturas);
         this.asignaturasPadre = asignaturas.filter(a => !a.padre);
       });
 
@@ -115,6 +114,10 @@ export class ExamenFormComponent extends CommonFormComponent<Examen, ExamenServi
 
   agregarPregunta(): void {
     this.preguntasArray.push(this.crearPregunta());
+  }
+
+  borrarPregunta(index: number): void {
+    this.preguntasArray.removeAt(index);
   }
 
   //* Como se ve, este método devuelve un FormGroup y como este método

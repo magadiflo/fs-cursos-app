@@ -46,7 +46,11 @@
             <div formArrayName="preguntas">
                 <div *ngFor="let pregunta of preguntasArray.controls; let i=index">
                     <div [formGroupName]="i">
-                        <input type="text" formControlName="texto" class="form-control" aria-label="pregunta">
+                        <div class="input-group mb-3">
+                            <input type="text" formControlName="texto" class="form-control" aria-label="pregunta">
+                            <button type="button" class="btn btn-outline-danger"
+                                (click)="borrarPregunta(i)">Eliminar</button>
+                        </div>
                     </div>
                 </div>
             </div>
