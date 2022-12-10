@@ -9,6 +9,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -46,6 +47,7 @@ import { AsignarAlumnosComponent } from './components/cursos/asignar-alumnos/asi
     MatInputModule,
     MatCheckboxModule,
     MatButtonModule,
+    MatCardModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
