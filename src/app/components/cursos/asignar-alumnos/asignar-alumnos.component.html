@@ -28,3 +28,4 @@
     <tr mat-header-row *matHeaderRowDef="mostrarColumnas"></tr>
     <tr mat-row *matRowDef="let row; columns: mostrarColumnas;" (click)="seleccion.toggle(row)"></tr>
 </table>
+<button mat-button mat-raised-button class="m-4" [disabled]="!seleccion.hasValue()" (click)="asignar()">Asignar</button>

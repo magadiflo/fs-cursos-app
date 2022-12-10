@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { switchMap } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 import { CursoService } from '../../../services/curso.service';
 import { AlumnoService } from '../../../services/alumno.service';
@@ -47,6 +48,15 @@ export class AsignarAlumnosComponent implements OnInit {
 
   estanTodosSeleccionados(): boolean {
     return this.seleccion.selected.length === this.alumnosAsignar.length;
+  }
+
+  asignar(): void {
+    this.cursoService.asignarAlumnos(this.curso, this.seleccion.selected)
+      .subscribe(curso => {
+        Swal.fire('Asignados', `Alumnos asignados con éxito al curso ${this.curso.nombre}`, 'success');
+        this.alumnosAsignar = [];
+        this.seleccion.clear();
+      });
   }
 
 }
