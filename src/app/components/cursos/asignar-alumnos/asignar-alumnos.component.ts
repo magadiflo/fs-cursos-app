@@ -42,11 +42,11 @@ export class AsignarAlumnosComponent implements OnInit {
   }
 
   seleccionarDesSeleccionarTodos(): void {
-
+    this.estanTodosSeleccionados() ? this.seleccion.clear() : this.alumnosAsignar.forEach(a => this.seleccion.select(a));
   }
 
   estanTodosSeleccionados(): boolean {
-    return true;
+    return this.seleccion.selected.length === this.alumnosAsignar.length;
   }
 
 }
