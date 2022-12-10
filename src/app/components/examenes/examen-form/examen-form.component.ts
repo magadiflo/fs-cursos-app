@@ -8,6 +8,7 @@ import { Examen } from '../../../models/examen';
 import { Asignatura } from '../../../models/asignatura';
 import { ExamenService } from '../../../services/examen.service';
 import { CommonFormComponent } from '../../common-form.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-examen-form',
@@ -109,13 +110,17 @@ export class ExamenFormComponent extends CommonFormComponent<Examen, ExamenServi
   }
 
   override crear(): void {
-    this.eliminarPreguntasVacias();
-    super.crear();
+    if(this.hayPreguntas()) {
+      this.eliminarPreguntasVacias();
+      super.crear();
+    }
   }
 
   override editar(): void {
-    this.eliminarPreguntasVacias();
-    super.editar();
+    if(this.hayPreguntas()) {
+      this.eliminarPreguntasVacias();
+      super.editar();
+    }
   }
 
   compararAsignatura(a1: Asignatura, a2: Asignatura): boolean {
@@ -148,6 +153,14 @@ export class ExamenFormComponent extends CommonFormComponent<Examen, ExamenServi
     this.preguntasArray.clear();
     //* Recorremos todos los FormGroup ya validados y los agregamos nuevamente al array
     preguntasFormGroup.forEach(formGroup => this.preguntasArray.push(this.crearPregunta(formGroup.value.id, formGroup.value.texto)));
+  }
+
+  private hayPreguntas(): boolean {
+    if (this.preguntasArray.length === 0) {
+      Swal.fire('Error preguntas', 'Examen debe tener preguntas', 'error');
+      return false;
+    }
+    return true;
   }
 
 }
