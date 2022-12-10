@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 import { CursoService } from '../../../services/curso.service';
 import { AlumnoService } from '../../../services/alumno.service';
-import { switchMap } from 'rxjs/operators';
 import { Curso } from '../../../models/curso';
+import { Alumno } from '../../../models/alumno';
 
 @Component({
   selector: 'app-asignar-alumnos',
@@ -14,6 +15,8 @@ import { Curso } from '../../../models/curso';
 export class AsignarAlumnosComponent implements OnInit {
 
   curso!: Curso;
+  alumnosAsignar: Alumno[] = [];
+  mostrarColumnas: string[] = ['nombre', 'apellido']; //* identificador, definición de los nombres de las columnas. Ejmpl. matColumnDef="nombre"
 
   constructor(
     private activatedRoute: ActivatedRoute,
