@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { SelectionModel } from '@angular/cdk/collections';
 import { switchMap } from 'rxjs/operators';
 
 import { CursoService } from '../../../services/curso.service';
@@ -16,7 +17,8 @@ export class AsignarAlumnosComponent implements OnInit {
 
   curso!: Curso;
   alumnosAsignar: Alumno[] = [];
-  mostrarColumnas: string[] = ['nombre', 'apellido']; //* identificador, definición de los nombres de las columnas. Ejmpl. matColumnDef="nombre"
+  mostrarColumnas: string[] = ['nombre', 'apellido', 'seleccion']; //* identificador, definición de los nombres de las columnas. Ejmpl. matColumnDef="nombre"
+  seleccion: SelectionModel<Alumno> = new SelectionModel<Alumno>(true, []);
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -37,6 +39,14 @@ export class AsignarAlumnosComponent implements OnInit {
       this.alumnoService.filtrarPorNombre(nombre.trim())
         .subscribe(alumnos => this.alumnosAsignar = alumnos);
     }
+  }
+
+  seleccionarDesSeleccionarTodos(): void {
+
+  }
+
+  estanTodosSeleccionados(): boolean {
+    return true;
   }
 
 }
