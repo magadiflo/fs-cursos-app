@@ -11,6 +11,7 @@
                     <th>Id</th>
                     <th>Nombre</th>
                     <th>Asignaturas</th>
+                    <th>Preguntas</th>
                     <th>Creado en</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
@@ -21,6 +22,7 @@
                     <td>{{ examen.id }}</td>
                     <td>{{ examen.nombre }}</td>
                     <td>{{ examen.asignaturaPadre?.nombre }} -> {{ examen.asignaturaHija?.nombre }}</td>
+                    <td>{{ examen.preguntas.length }}</td>
                     <td>{{ examen.createAt | date:'dd/MM/yyyy' }}</td>
                     <td>
                         <button type="button" [routerLink]="['/examenes', 'form', examen.id]"
