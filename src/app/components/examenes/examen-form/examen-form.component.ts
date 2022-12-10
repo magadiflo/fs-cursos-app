@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, filter } from 'rxjs';
 
 import { Examen } from '../../../models/examen';
 import { Asignatura } from '../../../models/asignatura';
@@ -108,6 +108,16 @@ export class ExamenFormComponent extends CommonFormComponent<Examen, ExamenServi
       });
   }
 
+  override crear(): void {
+    this.eliminarPreguntasVacias();
+    super.crear();
+  }
+
+  override editar(): void {
+    this.eliminarPreguntasVacias();
+    super.editar();
+  }
+
   compararAsignatura(a1: Asignatura, a2: Asignatura): boolean {
     return a1 && a2 ? a1.id === a2.id : a1 === a2;
   }
@@ -129,6 +139,15 @@ export class ExamenFormComponent extends CommonFormComponent<Examen, ExamenServi
       id: [id],
       texto: [texto, [Validators.required]]
     });
+  }
+
+  private eliminarPreguntasVacias(): void {
+    //* Obtenemos todos los FormGroup cuyo texto tenga contenido
+    const preguntasFormGroup = this.preguntasArray.controls.filter(formGroup => formGroup.value.texto != null && formGroup.value.texto.trim() != '');
+    //* Eliminar todos los controles en FormArray
+    this.preguntasArray.clear();
+    //* Recorremos todos los FormGroup ya validados y los agregamos nuevamente al array
+    preguntasFormGroup.forEach(formGroup => this.preguntasArray.push(this.crearPregunta(formGroup.value.id, formGroup.value.texto)));
   }
 
 }
