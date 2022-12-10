@@ -31,4 +31,12 @@ export class AsignarAlumnosComponent implements OnInit {
       .subscribe(curso => this.curso = curso);
   }
 
+  filtrar(event: Event): void {
+    const nombre = (event.target as HTMLInputElement).value;
+    if (nombre !== null && nombre.trim() !== '') {
+      this.alumnoService.filtrarPorNombre(nombre.trim())
+        .subscribe(alumnos => this.alumnosAsignar = alumnos);
+    }
+  }
+
 }
