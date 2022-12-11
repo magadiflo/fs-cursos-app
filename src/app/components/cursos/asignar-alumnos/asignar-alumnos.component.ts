@@ -19,7 +19,7 @@ export class AsignarAlumnosComponent implements OnInit {
   curso!: Curso;
   alumnosAsignar: Alumno[] = [];
   alumnos: Alumno[] = [];
-  mostrarTodasColumnas: string[] = ['id', 'nombre', 'apellido', 'email'];
+  mostrarTodasColumnas: string[] = ['id', 'nombre', 'apellido', 'email', 'eliminar'];
   mostrarColumnas: string[] = ['nombre', 'apellido', 'seleccion']; //* identificador, definición de los nombres de las columnas. Ejmpl. matColumnDef="nombre"
   seleccion: SelectionModel<Alumno> = new SelectionModel<Alumno>(true, []);
   tabIndex: number = 0;
@@ -83,6 +83,28 @@ export class AsignarAlumnosComponent implements OnInit {
           }
         }
       });
+  }
+
+  eliminarAlumno(alumno: Alumno): void {
+    Swal.fire({
+      title: `Eliminar alumno del curso ${this.curso.nombre}`,
+      text: `¿Seguro que desea que el alumno ${alumno.nombre} ya no esté asignado al curso?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.cursoService.eliminarAlumno(this.curso, alumno)
+          .subscribe(curso => {
+            this.curso.cursoAlumnos = curso.cursoAlumnos;
+            this.alumnos = this.alumnos.filter(a => a.id !== alumno.id);
+            Swal.fire('Eliminado', `El alumno ${alumno.nombre} fue eliminado del curso ${curso.nombre}`, 'success');
+            console.log(curso);
+          });
+      }
+    });
   }
 
 }
