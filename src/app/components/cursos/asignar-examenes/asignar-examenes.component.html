@@ -1,7 +1,7 @@
-<mat-form-field>
+<mat-form-field class="w-100">
     <input type="text" matInput [formControl]="autocompleteControl" [matAutocomplete]="autocomplete"
         placeholder="Añadir examen">
-    <mat-autocomplete #autocomplete="matAutocomplete">
+    <mat-autocomplete #autocomplete="matAutocomplete" [displayWith]="mostrarNombre">
         <mat-option *ngFor="let examen of examenesFiltrados;" [value]="examen">
             {{ examen.nombre }}
         </mat-option>
