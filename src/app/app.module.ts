@@ -11,6 +11,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +27,7 @@ import { FormComponent } from './components/alumnos/form/form.component';
 import { CursoFormComponent } from './components/cursos/curso-form/curso-form.component';
 import { ExamenFormComponent } from './components/examenes/examen-form/examen-form.component';
 import { AsignarAlumnosComponent } from './components/cursos/asignar-alumnos/asignar-alumnos.component';
+import { AsignarExamenesComponent } from './components/cursos/asignar-examenes/asignar-examenes.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { AsignarAlumnosComponent } from './components/cursos/asignar-alumnos/asi
     ImagenPipe,
     CursoFormComponent,
     ExamenFormComponent,
-    AsignarAlumnosComponent
+    AsignarAlumnosComponent,
+    AsignarExamenesComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +53,7 @@ import { AsignarAlumnosComponent } from './components/cursos/asignar-alumnos/asi
     MatButtonModule,
     MatCardModule,
     MatTabsModule,
+    MatAutocompleteModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
