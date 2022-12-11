@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { switchMap } from 'rxjs/operators';
 import { map } from 'rxjs';
 
@@ -20,6 +21,7 @@ export class AsignarExamenesComponent implements OnInit {
   curso!: Curso;
   autocompleteControl = new FormControl();
   examenesFiltrados: Examen[] = [];
+  examenesAsignar: Examen[] = [];
 
   constructor(
     private cursoService: CursoService,
@@ -44,6 +46,14 @@ export class AsignarExamenesComponent implements OnInit {
 
   mostrarNombre(examen?: Examen): string {
     return examen ? examen.nombre : '';
+  }
+
+  seleccionarExamen(event: MatAutocompleteSelectedEvent): void {
+    const examen = event.option.value as Examen;
+    this.examenesAsignar.push(examen);
+    this.autocompleteControl.setValue('');
+    event.option.deselect();
+    event.option.focus();
   }
 
 }
