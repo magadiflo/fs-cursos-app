@@ -22,6 +22,7 @@ export class AsignarExamenesComponent implements OnInit {
   autocompleteControl = new FormControl();
   examenesFiltrados: Examen[] = [];
   examenesAsignar: Examen[] = [];
+  mostrarColumnas: string[] = ['nombre', 'asignatura'];
 
   constructor(
     private cursoService: CursoService,
@@ -50,7 +51,12 @@ export class AsignarExamenesComponent implements OnInit {
 
   seleccionarExamen(event: MatAutocompleteSelectedEvent): void {
     const examen = event.option.value as Examen;
-    this.examenesAsignar.push(examen);
+
+    //* concat(...), devuelve un nuevo arreglo con los datos existentes más el que agregamos.
+    //* No usamos el push(...), porque el mat-table no detecta el cambio, pero si creamos
+    //* un arreglo nuevo a partir del existente más el nuevo elemento, allí sí lo detecta.
+    this.examenesAsignar = this.examenesAsignar.concat(examen);
+
     this.autocompleteControl.setValue('');
     event.option.deselect();
     event.option.focus();
