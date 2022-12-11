@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -48,6 +49,7 @@ import { AsignarAlumnosComponent } from './components/cursos/asignar-alumnos/asi
     MatCheckboxModule,
     MatButtonModule,
     MatCardModule,
+    MatTabsModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,

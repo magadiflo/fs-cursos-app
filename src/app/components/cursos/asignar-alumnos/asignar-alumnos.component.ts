@@ -18,6 +18,8 @@ export class AsignarAlumnosComponent implements OnInit {
 
   curso!: Curso;
   alumnosAsignar: Alumno[] = [];
+  alumnos: Alumno[] = [];
+  mostrarTodasColumnas: string[] = ['id', 'nombre', 'apellido', 'email'];
   mostrarColumnas: string[] = ['nombre', 'apellido', 'seleccion']; //* identificador, definición de los nombres de las columnas. Ejmpl. matColumnDef="nombre"
   seleccion: SelectionModel<Alumno> = new SelectionModel<Alumno>(true, []);
 
@@ -31,7 +33,10 @@ export class AsignarAlumnosComponent implements OnInit {
       .pipe(
         switchMap(({ id }) => this.cursoService.ver(id))
       )
-      .subscribe(curso => this.curso = curso);
+      .subscribe(curso => {
+        this.curso = curso;
+        this.alumnos = this.curso.alumnos;
+      });
   }
 
   filtrar(event: Event): void {
@@ -63,6 +68,7 @@ export class AsignarAlumnosComponent implements OnInit {
       .subscribe({
         next: curso => {
           this.curso = curso;
+          this.alumnos = this.curso.alumnos;
           Swal.fire('Asignados', `Alumnos asignados con éxito al curso ${this.curso.nombre}`, 'success');
           this.alumnosAsignar = [];
           this.seleccion.clear();
