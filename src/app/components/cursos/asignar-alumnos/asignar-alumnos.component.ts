@@ -38,7 +38,15 @@ export class AsignarAlumnosComponent implements OnInit {
     const nombre = (event.target as HTMLInputElement).value;
     if (nombre !== null && nombre.trim() !== '') {
       this.alumnoService.filtrarPorNombre(nombre.trim())
-        .subscribe(alumnos => this.alumnosAsignar = alumnos);
+        .subscribe(alumnos => this.alumnosAsignar = alumnos.filter(a => {
+          let filtrar = true;
+          this.curso.cursoAlumnos.forEach(ca => {
+            if (a.id === ca.alumnoId) {
+              filtrar = false;
+            }
+          });
+          return filtrar;
+        }));
     }
   }
 
@@ -53,6 +61,7 @@ export class AsignarAlumnosComponent implements OnInit {
   asignar(): void {
     this.cursoService.asignarAlumnos(this.curso, this.seleccion.selected)
       .subscribe(curso => {
+        this.curso = curso;
         Swal.fire('Asignados', `Alumnos asignados con éxito al curso ${this.curso.nombre}`, 'success');
         this.alumnosAsignar = [];
         this.seleccion.clear();
