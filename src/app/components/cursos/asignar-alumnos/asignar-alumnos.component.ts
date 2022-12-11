@@ -22,6 +22,7 @@ export class AsignarAlumnosComponent implements OnInit {
   mostrarTodasColumnas: string[] = ['id', 'nombre', 'apellido', 'email'];
   mostrarColumnas: string[] = ['nombre', 'apellido', 'seleccion']; //* identificador, definición de los nombres de las columnas. Ejmpl. matColumnDef="nombre"
   seleccion: SelectionModel<Alumno> = new SelectionModel<Alumno>(true, []);
+  tabIndex: number = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -67,6 +68,7 @@ export class AsignarAlumnosComponent implements OnInit {
     this.cursoService.asignarAlumnos(this.curso, this.seleccion.selected)
       .subscribe({
         next: curso => {
+          this.tabIndex = 2;
           this.curso = curso;
           this.alumnos = this.curso.alumnos;
           Swal.fire('Asignados', `Alumnos asignados con éxito al curso ${this.curso.nombre}`, 'success');
