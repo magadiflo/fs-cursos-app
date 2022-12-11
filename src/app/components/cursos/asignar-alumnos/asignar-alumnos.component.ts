@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+
 import { switchMap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
@@ -24,6 +27,15 @@ export class AsignarAlumnosComponent implements OnInit {
   seleccion: SelectionModel<Alumno> = new SelectionModel<Alumno>(true, []);
   tabIndex: number = 0;
 
+  pageSizeOptions: number[] = [3, 5, 10, 20, 50];
+  dataSource!: MatTableDataSource<Alumno>;
+  /***
+   * * static: true, true para resolver los resultados de la consulta antes de que 
+   * * se ejecute la detección de cambios, false para resolver después de 
+   * * la detección de cambios. El valor predeterminado es falso.
+   */
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private cursoService: CursoService,
@@ -37,7 +49,14 @@ export class AsignarAlumnosComponent implements OnInit {
       .subscribe(curso => {
         this.curso = curso;
         this.alumnos = this.curso.alumnos;
+        this.initPaginador();
       });
+  }
+
+  private initPaginador() {
+    this.dataSource = new MatTableDataSource<Alumno>(this.alumnos);
+    this.dataSource.paginator = this.paginator;
+    this.paginator._intl.itemsPerPageLabel = 'Registros por página';
   }
 
   filtrar(event: Event): void {
@@ -71,6 +90,7 @@ export class AsignarAlumnosComponent implements OnInit {
           this.tabIndex = 2;
           this.curso = curso;
           this.alumnos = this.curso.alumnos;
+          this.initPaginador();
           Swal.fire('Asignados', `Alumnos asignados con éxito al curso ${this.curso.nombre}`, 'success');
           this.alumnosAsignar = [];
           this.seleccion.clear();
@@ -100,6 +120,7 @@ export class AsignarAlumnosComponent implements OnInit {
           .subscribe(curso => {
             this.curso.cursoAlumnos = curso.cursoAlumnos;
             this.alumnos = this.alumnos.filter(a => a.id !== alumno.id);
+            this.initPaginador();
             Swal.fire('Eliminado', `El alumno ${alumno.nombre} fue eliminado del curso ${curso.nombre}`, 'success');
             console.log(curso);
           });
