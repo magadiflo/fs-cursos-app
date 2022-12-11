@@ -60,11 +60,20 @@ export class AsignarAlumnosComponent implements OnInit {
 
   asignar(): void {
     this.cursoService.asignarAlumnos(this.curso, this.seleccion.selected)
-      .subscribe(curso => {
-        this.curso = curso;
-        Swal.fire('Asignados', `Alumnos asignados con éxito al curso ${this.curso.nombre}`, 'success');
-        this.alumnosAsignar = [];
-        this.seleccion.clear();
+      .subscribe({
+        next: curso => {
+          this.curso = curso;
+          Swal.fire('Asignados', `Alumnos asignados con éxito al curso ${this.curso.nombre}`, 'success');
+          this.alumnosAsignar = [];
+          this.seleccion.clear();
+        },
+        error: err => {
+          if (err.status === 400) {
+            if (err.error.message === 'Registro duplicado') {
+              Swal.fire(err.error.message, 'No se puede asignar a este alumno, ya está asociado a otro curso', 'error');
+            }
+          }
+        }
       });
   }
 
