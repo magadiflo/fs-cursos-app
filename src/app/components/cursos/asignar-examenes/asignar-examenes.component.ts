@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
 
 import { Curso } from '../../../models/curso';
+import { Examen } from '../../../models/examen';
 
 import { CursoService } from '../../../services/curso.service';
 import { ExamenService } from '../../../services/examen.service';
@@ -15,6 +17,8 @@ import { ExamenService } from '../../../services/examen.service';
 export class AsignarExamenesComponent implements OnInit {
 
   curso!: Curso;
+  autocompleteControl = new FormControl();
+  examenesFiltrados: Examen[] = [];
 
   constructor(
     private cursoService: CursoService,
