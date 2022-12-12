@@ -23,7 +23,7 @@ export class AsignarExamenesComponent implements OnInit {
   autocompleteControl = new FormControl();
   examenesFiltrados: Examen[] = [];
   examenesAsignar: Examen[] = [];
-  mostrarColumnas: string[] = ['nombre', 'asignatura'];
+  mostrarColumnas: string[] = ['nombre', 'asignatura', 'eliminar'];
 
   constructor(
     private cursoService: CursoService,
@@ -72,6 +72,10 @@ export class AsignarExamenesComponent implements OnInit {
     this.autocompleteControl.setValue('');
     event.option.deselect();
     event.option.focus();
+  }
+
+  eliminarDelAsignar(examen: Examen): void {
+    this.examenesAsignar = this.examenesAsignar.filter(e => e.id !== examen.id);
   }
 
 }
