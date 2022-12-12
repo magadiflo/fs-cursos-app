@@ -10,6 +10,7 @@ import { Examen } from '../../../models/examen';
 
 import { CursoService } from '../../../services/curso.service';
 import { ExamenService } from '../../../services/examen.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-asignar-examenes',
@@ -35,7 +36,10 @@ export class AsignarExamenesComponent implements OnInit {
       .pipe(
         switchMap(({ id }) => this.cursoService.ver(id))
       )
-      .subscribe(curso => console.log(curso));
+      .subscribe(curso => {
+        console.log(curso);
+        this.curso = curso;
+      });
 
     this.autocompleteControl.valueChanges
       .pipe(
@@ -45,6 +49,10 @@ export class AsignarExamenesComponent implements OnInit {
       .subscribe(examenes => this.examenesFiltrados = examenes);
   }
 
+  private existe(id: number): boolean {
+    return this.examenesAsignar.concat(this.curso.examenes).map(exam => exam.id).indexOf(id) !== -1;
+  }
+
   mostrarNombre(examen?: Examen): string {
     return examen ? examen.nombre : '';
   }
@@ -52,10 +60,14 @@ export class AsignarExamenesComponent implements OnInit {
   seleccionarExamen(event: MatAutocompleteSelectedEvent): void {
     const examen = event.option.value as Examen;
 
-    //* concat(...), devuelve un nuevo arreglo con los datos existentes más el que agregamos.
-    //* No usamos el push(...), porque el mat-table no detecta el cambio, pero si creamos
-    //* un arreglo nuevo a partir del existente más el nuevo elemento, allí sí lo detecta.
-    this.examenesAsignar = this.examenesAsignar.concat(examen);
+    if (!this.existe(examen.id!)) {
+      //* concat(...), devuelve un nuevo arreglo con los datos existentes más el que agregamos.
+      //* No usamos el push(...), porque el mat-table no detecta el cambio, pero si creamos
+      //* un arreglo nuevo a partir del existente más el nuevo elemento, allí sí lo detecta.
+      this.examenesAsignar = this.examenesAsignar.concat(examen);
+    } else {
+      Swal.fire('¡Atención!', `El examen <b>${examen.nombre}</b> ya ha sido seleccionado`, 'warning');
+    }
 
     this.autocompleteControl.setValue('');
     event.option.deselect();
