@@ -66,7 +66,7 @@ export class AsignarExamenesComponent implements OnInit {
       //* un arreglo nuevo a partir del existente más el nuevo elemento, allí sí lo detecta.
       this.examenesAsignar = this.examenesAsignar.concat(examen);
     } else {
-      Swal.fire('¡Atención!', `El examen <b>${examen.nombre}</b> ya ha sido seleccionado`, 'warning');
+      Swal.fire('¡Atención!', `El examen <b>${examen.nombre}</b> ya ha sido seleccionado o asignado al curso`, 'warning');
     }
 
     this.autocompleteControl.setValue('');
@@ -76,6 +76,15 @@ export class AsignarExamenesComponent implements OnInit {
 
   eliminarDelAsignar(examen: Examen): void {
     this.examenesAsignar = this.examenesAsignar.filter(e => e.id !== examen.id);
+  }
+
+  asignar(): void {
+    this.cursoService.asignarExamenes(this.curso, this.examenesAsignar)
+      .subscribe(curso => {
+        this.curso = curso;
+        this.examenesAsignar = [];
+        Swal.fire('Asignados', `Exámenes asignados con éxito al curso <b>${curso.nombre}</b>`, 'success');
+      });
   }
 
 }
