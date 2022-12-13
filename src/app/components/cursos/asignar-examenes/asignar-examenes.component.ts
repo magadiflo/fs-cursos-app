@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatTableDataSource } from '@angular/material/table';
@@ -36,7 +36,6 @@ export class AsignarExamenesComponent implements OnInit {
   constructor(
     private cursoService: CursoService,
     private examenService: ExamenService,
-    private router: Router,
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
