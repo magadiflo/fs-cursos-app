@@ -32,4 +32,8 @@ export class CursoService extends CommonService<Curso> {
     return this.http.put<Curso>(`${this.baseEndPoint}/${curso.id}/asignar-examenes`, examenes, { headers: this.cabeceras });
   }
 
+  eliminarExamen(curso: Curso, examen: Examen): Observable<Curso> {
+    return this.http.put<Curso>(`${this.baseEndPoint}/${curso.id}/eliminar-examen`, examen, { headers: this.cabeceras });
+  }
+
 }

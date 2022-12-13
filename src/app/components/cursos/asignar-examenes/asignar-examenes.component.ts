@@ -24,7 +24,7 @@ export class AsignarExamenesComponent implements OnInit {
   examenesFiltrados: Examen[] = [];
   examenesAsignar: Examen[] = [];
   mostrarColumnas: string[] = ['nombre', 'asignatura', 'eliminar'];
-  mostrarTodasColumnasExamenes: string[] = ['id', 'nombre', 'asignaturas'];
+  mostrarTodasColumnasExamenes: string[] = ['id', 'nombre', 'asignaturas', 'eliminar'];
   examenes: Examen[] = [];
   tabIndex: number = 0;
 
@@ -92,4 +92,29 @@ export class AsignarExamenesComponent implements OnInit {
       });
   }
 
+  eliminarExamenDelCurso(examen: Examen): void {
+    Swal.fire({
+      title: `Eliminar examen del curso ${this.curso.nombre}`,
+      text: `¿Seguro que desea que el examen ${examen.nombre} ya no esté asignado al curso?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.cursoService.eliminarExamen(this.curso, examen)
+          .subscribe(curso => {
+            //*this.curso.cursoAlumnos = curso.cursoAlumnos;
+            //*this.alumnos = this.alumnos.filter(a => a.id !== alumno.id);
+            this.curso = curso;
+            this.examenes = this.examenes.filter(exam => exam.id !== examen.id);
+            //*this.initPaginador();
+            Swal.fire('Eliminado', `El examen ${examen.nombre} fue eliminado del curso ${curso.nombre}`, 'success');
+            console.log(curso);
+          });
+      }
+    });
+
+  }
 }
