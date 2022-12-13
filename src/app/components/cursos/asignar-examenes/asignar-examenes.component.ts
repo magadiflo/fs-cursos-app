@@ -24,6 +24,9 @@ export class AsignarExamenesComponent implements OnInit {
   examenesFiltrados: Examen[] = [];
   examenesAsignar: Examen[] = [];
   mostrarColumnas: string[] = ['nombre', 'asignatura', 'eliminar'];
+  mostrarTodasColumnasExamenes: string[] = ['id', 'nombre', 'asignaturas'];
+  examenes: Examen[] = [];
+  tabIndex: number = 0;
 
   constructor(
     private cursoService: CursoService,
@@ -39,6 +42,7 @@ export class AsignarExamenesComponent implements OnInit {
       .subscribe(curso => {
         console.log(curso);
         this.curso = curso;
+        this.examenes = curso.examenes;
       });
 
     this.autocompleteControl.valueChanges
@@ -84,6 +88,7 @@ export class AsignarExamenesComponent implements OnInit {
         this.curso = curso;
         this.examenesAsignar = [];
         Swal.fire('Asignados', `Exámenes asignados con éxito al curso <b>${curso.nombre}</b>`, 'success');
+        this.tabIndex = 2;
       });
   }
 
