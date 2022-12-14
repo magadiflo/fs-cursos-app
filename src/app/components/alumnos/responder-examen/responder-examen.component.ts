@@ -90,6 +90,7 @@ export class ResponderExamenComponent implements OnInit {
   verExamen(examen: Examen): void {
     this.respuestaService.obtenerRespuestasPorAlumnoYExamen(this.alumno, examen)
       .subscribe(resp => {
+        console.log(`Obtener respuestas por alumno y examen`, examen, resp);        
         const modalRef = this.dialog.open(VerExamenModalComponent, {
           width: '750px',
           data: { curso: this.curso, examen, respuestas: resp }
