@@ -19,6 +19,7 @@ export class ResponderExamenComponent implements OnInit {
   alumno!: Alumno;
   curso!: Curso;
   examenes: Examen[] = [];
+  mostrarColumnasExamenes: string[] = ['id', 'nombre', 'asignaturas', 'preguntas'];
 
   constructor(
     private activatedRoute: ActivatedRoute,
