@@ -43,6 +43,12 @@ export class ResponderExamenModalComponent implements OnInit {
     const respuesta = new Respuesta();
     respuesta.alumno = this.alumno;
     respuesta.pregunta = pregunta;
+
+    const examen = new Examen();
+    examen.id = this.examen.id;
+    examen.nombre = this.examen.nombre;
+
+    respuesta.pregunta.examen = examen;
     respuesta.texto = texto;
 
     this.respuestas.set(pregunta.id!, respuesta);

@@ -8,11 +8,14 @@ import { switchMap } from 'rxjs/operators';
 import { Alumno } from '../../../models/alumno';
 import { Curso } from '../../../models/curso';
 import { Examen } from '../../../models/examen';
+import { Respuesta } from '../../../models/respuesta';
 
 import { AlumnoService } from '../../../services/alumno.service';
 import { CursoService } from '../../../services/curso.service';
+import { RespuestaService } from '../../../services/respuesta.service';
 
 import { ResponderExamenModalComponent } from '../responder-examen-modal/responder-examen-modal.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-responder-examen',
@@ -33,6 +36,7 @@ export class ResponderExamenComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private alumnoService: AlumnoService,
     private cursoService: CursoService,
+    private respuestaService: RespuestaService,
     public dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -66,14 +70,21 @@ export class ResponderExamenComponent implements OnInit {
     });
 
     modalRef.afterClosed()
-      .subscribe(respuestasMap => {
+      .subscribe((respuestasMap: Map<number, Respuesta>) => {
         console.log('Modal responder examen ha sido enviado y cerrado', respuestasMap);
         if (respuestasMap) {
           //* El método Array.from(), crea una nueva instancia de Array a partir de un objeto iterable
-          const respuestas = Array.from(respuestasMap.values()); //* De esa manera convertimos los valores del mapa en un arreglo, es decir obtendremos un arreglo de respuestas
+          const respuestas: Respuesta[] = Array.from(respuestasMap.values()); //* De esa manera convertimos los valores del mapa en un arreglo, es decir obtendremos un arreglo de respuestas
           console.log('respuestas', respuestas);
+          this.respuestaService.crear(respuestas)
+            .subscribe(resp => {
+              console.log('Respuestas guardadas', resp);
+              examen.respondido = true;
+              Swal.fire('Enviadas', 'Preguntas enviadas con éxito', 'success');
+            });
         }
       });
   }
 
 }
+//**** MINUTO 2:25 */
