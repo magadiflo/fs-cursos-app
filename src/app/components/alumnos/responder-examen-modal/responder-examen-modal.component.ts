@@ -4,6 +4,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Curso } from '../../../models/curso';
 import { Alumno } from '../../../models/alumno';
 import { Examen } from '../../../models/examen';
+import { Respuesta } from '../../../models/respuesta';
+import { Pregunta } from '../../../models/pregunta';
 
 @Component({
   selector: 'app-responder-examen-modal',
@@ -15,7 +17,7 @@ export class ResponderExamenModalComponent implements OnInit {
   curso!: Curso;
   alumno!: Alumno;
   examen!: Examen;
-  respuestas = ['Alguna respuesta'];
+  respuestas: Map<number, Respuesta> = new Map<number, Respuesta>();
 
   /**
    * * @Inject(MAT_DIALOG_DATA), con esto se inyectan los datos que se pasan a este componente desde el método
@@ -34,6 +36,17 @@ export class ResponderExamenModalComponent implements OnInit {
 
   cancelar(): void {
     this.modalRef.close();
+  }
+
+  responder(pregunta: Pregunta, event: Event): void {
+    const texto = (event.target as HTMLInputElement).value;
+    const respuesta = new Respuesta();
+    respuesta.alumno = this.alumno;
+    respuesta.pregunta = pregunta;
+    respuesta.texto = texto;
+
+    this.respuestas.set(pregunta.id!, respuesta);
+    console.log(this.respuestas);
   }
 
 }
