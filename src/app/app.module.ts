@@ -13,6 +13,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -60,6 +61,7 @@ import { ResponderExamenModalComponent } from './components/alumnos/responder-ex
     MatTabsModule,
     MatAutocompleteModule,
     MatDialogModule,
+    MatExpansionModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
