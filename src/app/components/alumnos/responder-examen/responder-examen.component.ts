@@ -21,7 +21,7 @@ export class ResponderExamenComponent implements OnInit {
   alumno!: Alumno;
   curso!: Curso;
   examenes: Examen[] = [];
-  mostrarColumnasExamenes: string[] = ['id', 'nombre', 'asignaturas', 'preguntas'];
+  mostrarColumnasExamenes: string[] = ['id', 'nombre', 'asignaturas', 'preguntas', 'responder', 'ver'];
   datasource!: MatTableDataSource<Examen>;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   pageSizeOptions: number[] = [3, 5, 10, 20, 30, 50];
