@@ -58,6 +58,9 @@ export class ResponderExamenComponent implements OnInit {
   }
 
   responderExamen(examen: Examen): void {
+    //* Esta variable modalRef, que es una referencia de nuestro modal, 
+    //* se pasa de forma automática a nuestro componente modal. Esa referencia
+    //* será inyectada en el modal para poder recibirla.
     const modalRef = this.dialog.open(ResponderExamenModalComponent, {
       width: '750px', data: { curso: this.curso, alumno: this.alumno, examen }
     });
