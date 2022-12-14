@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,6 +30,7 @@ import { ExamenFormComponent } from './components/examenes/examen-form/examen-fo
 import { AsignarAlumnosComponent } from './components/cursos/asignar-alumnos/asignar-alumnos.component';
 import { AsignarExamenesComponent } from './components/cursos/asignar-examenes/asignar-examenes.component';
 import { ResponderExamenComponent } from './components/alumnos/responder-examen/responder-examen.component';
+import { ResponderExamenModalComponent } from './components/alumnos/responder-examen-modal/responder-examen-modal.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { ResponderExamenComponent } from './components/alumnos/responder-examen/
     ExamenFormComponent,
     AsignarAlumnosComponent,
     AsignarExamenesComponent,
-    ResponderExamenComponent
+    ResponderExamenComponent,
+    ResponderExamenModalComponent
   ],
   imports: [
     BrowserModule,
@@ -56,9 +59,16 @@ import { ResponderExamenComponent } from './components/alumnos/responder-examen/
     MatCardModule,
     MatTabsModule,
     MatAutocompleteModule,
+    MatDialogModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
+  ],
+  //* entryComponents[ResponderExamenModalComponent], Como es una ventana modal, es un componente especial, es decir, 
+  //* un componente que no está enrutado, ni anidado en otro componente, sino que es una ventana  modal que se ejecuta 
+  //* en tiempo de ejecución, por eso es que tenemos que registrar este componente como un componente de entrada
+  entryComponents: [
+    ResponderExamenModalComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
