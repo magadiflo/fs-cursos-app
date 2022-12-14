@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { switchMap } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 import { Alumno } from '../../../models/alumno';
 import { Curso } from '../../../models/curso';
@@ -15,7 +16,7 @@ import { CursoService } from '../../../services/curso.service';
 import { RespuestaService } from '../../../services/respuesta.service';
 
 import { ResponderExamenModalComponent } from '../responder-examen-modal/responder-examen-modal.component';
-import Swal from 'sweetalert2';
+import { VerExamenModalComponent } from '../ver-examen-modal/ver-examen-modal.component';
 
 @Component({
   selector: 'app-responder-examen',
@@ -86,5 +87,19 @@ export class ResponderExamenComponent implements OnInit {
       });
   }
 
+  verExamen(examen: Examen): void {
+    this.respuestaService.obtenerRespuestasPorAlumnoYExamen(this.alumno, examen)
+      .subscribe(resp => {
+        const modalRef = this.dialog.open(VerExamenModalComponent, {
+          width: '750px',
+          data: { curso: this.curso, examen, respuestas: resp }
+        });
+
+        modalRef.afterClosed()
+          .subscribe(() => {
+            console.log('Modal ver examen cerrado!');
+          });
+      });
+  }
+
 }
-//**** MINUTO 2:25 */
