@@ -32,6 +32,7 @@ import { AsignarAlumnosComponent } from './components/cursos/asignar-alumnos/asi
 import { AsignarExamenesComponent } from './components/cursos/asignar-examenes/asignar-examenes.component';
 import { ResponderExamenComponent } from './components/alumnos/responder-examen/responder-examen.component';
 import { ResponderExamenModalComponent } from './components/alumnos/responder-examen-modal/responder-examen-modal.component';
+import { VerExamenModalComponent } from './components/alumnos/ver-examen-modal/ver-examen-modal.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ResponderExamenModalComponent } from './components/alumnos/responder-ex
     AsignarAlumnosComponent,
     AsignarExamenesComponent,
     ResponderExamenComponent,
-    ResponderExamenModalComponent
+    ResponderExamenModalComponent,
+    VerExamenModalComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +73,7 @@ import { ResponderExamenModalComponent } from './components/alumnos/responder-ex
   //* en tiempo de ejecución, por eso es que tenemos que registrar este componente como un componente de entrada
   entryComponents: [
     ResponderExamenModalComponent,
+    VerExamenModalComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

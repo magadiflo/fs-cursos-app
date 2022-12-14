@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { Respuesta } from '../models/respuesta';
+import { Examen } from '../models/examen';
+import { Alumno } from '../models/alumno';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +19,10 @@ export class RespuestaService {
 
   crear(respuestas: Respuesta[]): Observable<Respuesta[]> {
     return this.http.post<Respuesta[]>(`${this.baseEndPoint}`, respuestas, { headers: this.cabeceras });
+  }
+
+  obtenerRespuestasPorAlumnoYExamen(alumno: Alumno, examen: Examen): Observable<Respuesta[]> {
+    return this.http.get<Respuesta[]>(`${this.baseEndPoint}/alumno/${alumno.id}/examen/${examen.id}`);
   }
 
 }
