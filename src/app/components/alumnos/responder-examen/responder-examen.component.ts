@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 import { Alumno } from '../../../models/alumno';
 import { Curso } from '../../../models/curso';
@@ -7,7 +8,6 @@ import { Examen } from '../../../models/examen';
 
 import { AlumnoService } from '../../../services/alumno.service';
 import { CursoService } from '../../../services/curso.service';
-import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-responder-examen',
@@ -31,7 +31,15 @@ export class ResponderExamenComponent implements OnInit {
         switchMap(({ id }) => this.alumnoService.ver(id))
       )
       .subscribe(alumno => {
+        console.log(alumno);
         this.alumno = alumno;
+
+        this.cursoService.obtenerCursoPorAlumnoId(this.alumno)
+          .subscribe(curso => {
+            console.log(curso);
+            this.curso = curso;
+            this.examenes = (curso && curso.examenes) ? curso.examenes : [];
+          });
       });
   }
 

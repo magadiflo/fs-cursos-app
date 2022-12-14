@@ -9,12 +9,14 @@ import { CursoFormComponent } from './components/cursos/curso-form/curso-form.co
 import { ExamenFormComponent } from './components/examenes/examen-form/examen-form.component';
 import { AsignarAlumnosComponent } from './components/cursos/asignar-alumnos/asignar-alumnos.component';
 import { AsignarExamenesComponent } from './components/cursos/asignar-examenes/asignar-examenes.component';
+import { ResponderExamenComponent } from './components/alumnos/responder-examen/responder-examen.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'cursos', pathMatch: 'full' },
   { path: 'alumnos', component: AlumnosComponent, },
   { path: 'alumnos/form', component: AlumnosForm, },
   { path: 'alumnos/form/:id', component: AlumnosForm, },
+  { path: 'alumnos/responder-examen/:id', component: ResponderExamenComponent, },
   { path: 'cursos', component: CursosComponent, },
   { path: 'cursos/form', component: CursoFormComponent, },
   { path: 'cursos/asignar-alumnos/:id', component: AsignarAlumnosComponent, },
