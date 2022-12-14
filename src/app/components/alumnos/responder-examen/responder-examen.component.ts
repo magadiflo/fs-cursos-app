@@ -66,8 +66,13 @@ export class ResponderExamenComponent implements OnInit {
     });
 
     modalRef.afterClosed()
-      .subscribe(respuestas => {
-        console.log('Modal responder examen ha sido enviado y cerrado', respuestas);
+      .subscribe(respuestasMap => {
+        console.log('Modal responder examen ha sido enviado y cerrado', respuestasMap);
+        if (respuestasMap) {
+          //* El método Array.from(), crea una nueva instancia de Array a partir de un objeto iterable
+          const respuestas = Array.from(respuestasMap.values()); //* De esa manera convertimos los valores del mapa en un arreglo, es decir obtendremos un arreglo de respuestas
+          console.log('respuestas', respuestas);
+        }
       });
   }
 
