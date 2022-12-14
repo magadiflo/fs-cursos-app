@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
 import { switchMap } from 'rxjs/operators';
 
 import { Alumno } from '../../../models/alumno';
@@ -9,7 +11,8 @@ import { Examen } from '../../../models/examen';
 
 import { AlumnoService } from '../../../services/alumno.service';
 import { CursoService } from '../../../services/curso.service';
-import { MatPaginator } from '@angular/material/paginator';
+
+import { ResponderExamenModalComponent } from '../responder-examen-modal/responder-examen-modal.component';
 
 @Component({
   selector: 'app-responder-examen',
@@ -29,7 +32,8 @@ export class ResponderExamenComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private alumnoService: AlumnoService,
-    private cursoService: CursoService) { }
+    private cursoService: CursoService,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.activatedRoute.params
@@ -50,6 +54,17 @@ export class ResponderExamenComponent implements OnInit {
             this.datasource.paginator = this.paginator;
             this.paginator._intl.itemsPerPageLabel = 'Registros por página';
           });
+      });
+  }
+
+  responderExamen(examen: Examen): void {
+    const modalRef = this.dialog.open(ResponderExamenModalComponent, {
+      width: '750px', data: { curso: this.curso, alumno: this.alumno, examen }
+    });
+
+    modalRef.afterClosed()
+      .subscribe(respuestas => {
+        console.log('Modal responder examen ha sido enviado y cerrado', respuestas);
       });
   }
 

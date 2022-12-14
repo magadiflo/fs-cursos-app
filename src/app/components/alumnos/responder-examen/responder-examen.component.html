@@ -29,7 +29,8 @@
             <ng-container matColumnDef="responder">
                 <th mat-header-cell *matHeaderCellDef>Responder</th>
                 <td mat-cell *matCellDef="let examen">
-                    <button type="button" mat-stroked-button color="warn" [disabled]="examen.respondido">
+                    <button type="button" mat-stroked-button color="warn" [disabled]="examen.respondido"
+                        (click)="responderExamen(examen)">
                         {{ examen.respondido ? 'Respondido': 'Responder' }}
                     </button>
                 </td>
